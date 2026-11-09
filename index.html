@@ -107,7 +107,7 @@ input[type=text]{font:inherit;font-weight:800;font-size:clamp(16px,2.6vmin,24px)
 .stamp{display:inline-block;font-weight:900;font-size:clamp(22px,5vmin,52px);padding:0 22px;border-radius:12px;color:#fff;margin-bottom:2px}
 .yes .stamp{background:var(--good)}.no .stamp{background:var(--bad)}
 
-.ctrl{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr auto;gap:clamp(6px,1.2vmin,12px)}
+.ctrl{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr auto auto;gap:clamp(6px,1.2vmin,12px)}
 .stages{display:flex;gap:clamp(4px,1vmin,10px)}
 .stg{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;gap:8px;border:2px solid rgba(201,150,46,.45);border-radius:14px;padding:clamp(4px,1vmin,10px) 8px;background:rgba(0,0,0,.28);color:var(--ivory);position:relative;overflow:hidden}
 .stg svg{flex:none;width:clamp(18px,3.6vmin,34px);height:clamp(18px,3.6vmin,34px);fill:var(--gold2)}
@@ -221,6 +221,7 @@ input[type=text]{font:inherit;font-weight:800;font-size:clamp(16px,2.6vmin,24px)
       <button class="btn" id="bNext" type="button">السؤال اللي بعده</button>
       <button class="btn" id="bUndo" type="button">تراجع نقطة</button>
       <button class="btn mute" id="bMute" type="button" aria-pressed="false">الصوت: شغال</button>
+      <button class="btn mute" id="bEnd" type="button">إنهاء التحدي</button>
     </div>
     <div class="stages" id="stageBar"></div>
   </section>
@@ -1131,6 +1132,11 @@ $('#bStart').onclick=()=>{if(S.intro)hideIntro();else startQ()};
 $('#bAns').onclick=()=>{if(S.intro)hideIntro();else reveal()};
 $('#bNext').onclick=next;
 $('#bUndo').onclick=undo;
+let endT=0;
+$('#bEnd').onclick=()=>{const b=$('#bEnd');
+  if(!endT){b.textContent='اضغط تاني للتأكيد';endT=setTimeout(()=>{endT=0;b.textContent='إنهاء التحدي'},3000);return}
+  clearTimeout(endT);endT=0;b.textContent='إنهاء التحدي';
+  clearInterval(S.timer);S.timer=null;finish()};
 $('#bIntro').onclick=hideIntro;
 $('#p1').onclick=()=>add(0,10);
 $('#p2').onclick=()=>add(1,10);
