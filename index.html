@@ -177,6 +177,8 @@ input[type=text]{font:inherit;font-weight:800;font-size:clamp(16px,2.6vmin,24px)
           <div class="row" id="perChips"><span class="lab">عدد الأسئلة في كل مرحلة</span></div>
         </div>
         <button class="btn primary" id="bGo" type="button" style="font-size:clamp(18px,3.4vmin,32px);padding-inline:40px">ابدأ المسابقة</button>
+        <button class="btn" id="bInstall" type="button" hidden style="margin-top:10px">📲 ثبّت التطبيق على جهازك</button>
+        <div id="instHelp" hidden style="margin-top:10px;font-size:clamp(13px,2.2vmin,18px);line-height:1.7;color:var(--gold2);max-width:34em"></div>
         <p class="tiny">كل لعبة جديدة بتسحب أسئلة مختلفة من البنك. الاختصارات: مسافة للتالي، A للإجابة، 1 و 2 للنقاط، Z للتراجع.</p>
       </div>
     </div>
@@ -1128,6 +1130,20 @@ function confetti(){
 /* ربط الأزرار */
 buildSetup();
 $('#bGo').onclick=newGame;
+(function(){
+  const b=$('#bInstall'),help=$('#instHelp');let dp=null;
+  const standalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+  if(standalone())return;
+  const ua=navigator.userAgent,ios=/iphone|ipad|ipod/i.test(ua);
+  b.hidden=false;
+  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e});
+  window.addEventListener('appinstalled',()=>{b.hidden=true;help.hidden=true});
+  b.onclick=async()=>{
+    if(dp){dp.prompt();try{await dp.userChoice}catch(e){}dp=null;return}
+    help.hidden=false;
+    help.textContent=ios?'على الآيفون: افتح اللينك من Safari، اضغط زر المشاركة، ثم "إضافة إلى الشاشة الرئيسية".':'من متصفح Chrome أو Edge: اضغط على القايمة (⋮ أو ...)، ثم "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية". لو مش ظاهرة، افتح اللينك في Chrome مباشرة وجرّب تاني.';
+  };
+})();
 $('#bStart').onclick=()=>{if(S.intro)hideIntro();else startQ()};
 $('#bAns').onclick=()=>{if(S.intro)hideIntro();else reveal()};
 $('#bNext').onclick=next;
