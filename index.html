@@ -149,6 +149,19 @@ input[type=text]{font:inherit;font-weight:800;font-size:clamp(16px,2.6vmin,24px)
 }
 @media (max-width:520px){.stg .c{display:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (min-aspect-ratio:1/1){
+ .startgrid{scrollbar-width:none;padding-block:0}.startgrid::-webkit-scrollbar{display:none}
+ .startbody{gap:clamp(4px,1vh,10px)}
+ .startbody .h1{font-size:clamp(24px,5.6vh,52px)}
+ .startbody .sub{font-size:clamp(13px,2.3vh,20px)}
+ .startbody .panel{padding:clamp(8px,1.6vh,16px);gap:clamp(5px,1.1vh,12px);border-radius:16px}
+ .startbody .lab{font-size:clamp(13px,2vh,18px)}
+ .startbody .row{gap:6px 8px}
+ .startbody .chipbtn{font-size:clamp(13px,2vh,18px);padding:clamp(3px,.7vh,6px) 14px}
+ .startbody input[type=text]{font-size:clamp(14px,2.3vh,22px);padding:clamp(4px,.8vh,7px) 10px}
+ .startbody #bGo{font-size:clamp(16px,3vh,28px)!important;padding-block:clamp(6px,1.2vh,12px)}
+ .startbody #bInstall{margin-top:0!important;font-size:clamp(13px,2vh,18px);padding-block:clamp(4px,.9vh,8px)}
+}
 </style>
 
 <div id="root" dir="rtl" lang="ar">
